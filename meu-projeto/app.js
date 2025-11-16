@@ -6,8 +6,12 @@ var logger = require('morgan');
 var aboutRouter = require('./routes/about');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var contatoRouter = require('./routes/contato');
 
 var app = express();
+
+const helmet = require('helmet');
+app.use(helmet());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,6 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/about', aboutRouter);
 app.use('/users', usersRouter);
+app.use('/contato', contatoRouter);
+
+app.use(express.urlencoded({ extended: false })); // já vem no template recente; se faltar, adicione
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
