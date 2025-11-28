@@ -62,23 +62,63 @@ router.post('/',
       aceite: req.body.aceite === 'on'
     };
 
-    if (!errors.isEmpty()) {
-      const mapped = errors.mapped();
-      return res.status(400).render('contato', {
-        title: 'Formulário de Contato',
-        data,
-        errors: mapped
+   if (!errors.isEmpty()) {
+  const mapped = errors.mapped();
+  return res.status(400).render('contato', {
+    title: 'Formulário de Contato',
+    data,
+    errors: mapped
+  });
+}
+router.get('/lista', (req, res) => {
+  const rows = db.prepare(`
+    SELECT id, nome, email, idade, genero, interesses, mensagem, criado_em
+    FROM contatos
+    ORDER BY criado_em DESC
+  `).all();
 
-      });
-    }
+  res.render('contatos-lista', {
+    title: 'Lista de Contatos',
+    contatos: rows
+  });
+});
+router.post('/:id/delete', (req, res) => {
+  const id = parseInt(req.params.id, 10);
 
-    // Aqui você poderia persistir no banco, enviar e-mail, etc.
+  if (Number.isNaN(id)) {
+    // ID inválido → só volta
+    return res.redirect('/contato/lista');
+  }
 
-    return res.render('sucesso', {
-      title: 'Enviado com sucesso',
-      data
-    });
+  const info = db.prepare('DELETE FROM contatos WHERE id = ?').run(id);
+
+  // Opcional: você pode testar se algo foi deletado
+  // if (info.changes === 0) { console.log('Nenhum registro com esse ID'); }
+
+  return res.redirect('/contato/lista');
+});
+// Sucesso: salvar no banco
+const stmt = db.prepare(`
+  INSERT INTO contatos (nome, email, idade, genero, interesses, mensagem, aceite)
+  VALUES (@nome, @email, @idade, @genero, @interesses, @mensagem, @aceite)
+`);
+
+stmt.run({
+  nome: data.nome,
+  email: data.email,
+  idade: data.idade || null,
+  genero: data.genero || null,
+  interesses: Array.isArray(data.interesses)
+    ? data.interesses.join(',')
+    : (data.interesses || ''),
+  mensagem: data.mensagem,
+  aceite: data.aceite ? 1 : 0
+});
+
+// Depois de inserir, podemos mostrar página de sucesso
+return res.render('sucesso', {
+  title: 'Enviado com sucesso',
+  data
+});
   }
 );
-
-module.exports = router;
