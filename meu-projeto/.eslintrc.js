@@ -1,0 +1,16 @@
+module.exports = {
+  env: {
+    node: true,
+    es2021: true,
+    jest: true
+  },
+  parserOptions: {
+    ecmaVersion: 2021,
+    sourceType: 'script'
+  },
+  extends: ['eslint:recommended'],
+  rules: {
+    'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    'no-console': 'off'
+  }
+};
