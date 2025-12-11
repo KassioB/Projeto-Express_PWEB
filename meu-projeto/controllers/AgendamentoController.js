@@ -14,13 +14,13 @@ class AgendamentoController {
   }
 
   async agendar(req, res) {
-    const payload = { adminId: Number(req.body.adminId), medicoId: Number(req.body.medicoId), pacienteId: Number(req.body.pacienteId), dataHora: req.body.dataHora };
+    const payload = { adminId: Number(req.admin && req.admin.id), medicoId: Number(req.body.medicoId), pacienteId: Number(req.body.pacienteId), dataHora: req.body.dataHora };
     const medicos = await this.medicoService.listar();
     const pessoas = await this.pessoaService.listar();
     const consultas = await this.agendamentoService.listarConsultas();
 
     const errors = {};
-    if (!payload.adminId) errors.adminId = { msg: 'Informe o ID do administrador.' };
+    if (!payload.adminId) errors.geral = { msg: 'Acesso restrito a administradores.' };
     if (!payload.medicoId) errors.medicoId = { msg: 'Selecione o médico.' };
     if (!payload.pacienteId) errors.pacienteId = { msg: 'Selecione o paciente.' };
     if (!payload.dataHora) errors.dataHora = { msg: 'Informe data/hora.' };

@@ -11,7 +11,6 @@
   <% if (sucesso) { %><div class="success"><%= sucesso %></div><% } %>
   <% if (errors.geral) { %><div class="error"><%= errors.geral.msg %></div><% } %>
   <form method="post" action="/agendamento">
-    <div class="field"><label>ID Administrador*</label><br/><input name="adminId" type="number" value="<%= data.adminId||'' %>" /> <% if (errors.adminId) { %><div class="error"><%= errors.adminId.msg %></div><% } %></div>
     <div class="field">
       <label>Médico*</label><br/>
       <select name="medicoId">

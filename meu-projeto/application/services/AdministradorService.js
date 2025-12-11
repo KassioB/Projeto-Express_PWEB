@@ -12,6 +12,9 @@ class AdministradorService {
     const admin = new Administrador({ pessoaId: Number(pessoaId) });
     return await this.adminRepo.create(admin);
   }
+
+  async listar() { return await this.adminRepo.findAll(); }
+  async obter(id) { return await this.adminRepo.findById(Number(id)); }
 }
 
 module.exports = AdministradorService;

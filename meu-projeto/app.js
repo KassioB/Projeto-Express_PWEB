@@ -6,10 +6,11 @@ var logger = require('morgan');
 var aboutRouter = require('./routes/about');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-// removido contatoRouter após migração para Pessoas
 var pessoasRouter = require('./routes/pessoas');
 var medicosRouter = require('./routes/medicos');
 var agendamentoRouter = require('./routes/agendamento');
+var adminRouter = require('./routes/admin');
+var requireAdmin = require('./middlewares/requireAdmin');
 
 var app = express();
 
@@ -31,7 +32,8 @@ app.use('/about', aboutRouter);
 app.use('/users', usersRouter);
 app.use('/pessoas', pessoasRouter);
 app.use('/medicos', medicosRouter);
-app.use('/agendamento', agendamentoRouter);
+app.use('/admin', adminRouter);
+app.use('/agendamento', requireAdmin, agendamentoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
