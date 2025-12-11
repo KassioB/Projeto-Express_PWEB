@@ -30,10 +30,23 @@
           <option value="<%= p.id %>" <%= (data.pacienteId==p.id)?'selected':'' %>><%= p.nome %> - <%= p.cpf %></option>
         <% }) %>
       </select>
-      <% if (errors.pacienteId) { %><div class="error"><%= errors.pacienteId.msg %></div><% } %>
+
     </div>
     <div class="field"><label>Data/Hora*</label><br/><input name="dataHora" type="datetime-local" value="<%= data.dataHora||'' %>" /> <% if (errors.dataHora) { %><div class="error"><%= errors.dataHora.msg %></div><% } %></div>
     <button type="submit">Agendar</button>
+  </form>
+  <h2>Abrir Agenda por CRM</h2>
+  <form id="form-agenda-crm" method="get" action="/medicos/agenda">
+    <label>Médico</label>
+    <select id="agenda-medico-crm" name="crm" required>
+      <option value="">Selecione</option>
+      <% (medicos || []).forEach(m=> { %>
+        <option value="<%= m.crm %>"><%= (m.pessoa? m.pessoa.nome : ('Médico '+m.id)) %> - <%= m.crm %></option>
+      <% }) %>
+    </select>
+    <label>Data</label>
+    <input id="agenda-medico-data" name="data" type="date" />
+    <button type="submit">Abrir Agenda</button>
   </form>
   <p><a href="/pessoas">Ver Pessoas</a> | <a href="/medicos/novo">Cadastrar Médico</a></p>
 </body>

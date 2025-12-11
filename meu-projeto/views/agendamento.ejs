@@ -35,6 +35,20 @@
     <button type="submit">Agendar</button>
   </form>
 
+  <h2>Abrir Agenda por CRM</h2>
+  <form method="get" action="/medicos/agenda">
+    <label>Médico</label>
+    <select id="agenda-medico-crm" name="crm" required>
+      <option value="">Selecione</option>
+      <% (medicos || []).forEach(m=> { %>
+        <option value="<%= m.crm %>"><%= (m.pessoa? m.pessoa.nome : ('Médico '+m.id)) %> - <%= m.crm %></option>
+      <% }) %>
+    </select>
+    <label>Data</label>
+    <input id="agenda-medico-data" name="data" type="date" />
+    <button type="submit">Abrir Agenda</button>
+  </form>
+
   <h2>Consultas agendadas</h2>
   <% if (!consultas || consultas.length===0) { %>
     <p>Sem consultas.</p>

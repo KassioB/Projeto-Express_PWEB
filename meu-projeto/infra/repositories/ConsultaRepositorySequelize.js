@@ -1,5 +1,6 @@
 const ConsultaRepository = require('../../domain/ports/ConsultaRepository');
 const Consulta = require('../../domain/entities/Consulta');
+const { Op } = require('sequelize');
 const Medico = require('../../domain/entities/Medico');
 const Pessoa = require('../../domain/entities/Pessoa');
 
@@ -95,6 +96,18 @@ class ConsultaRepositorySequelize extends ConsultaRepository {
       ]
     });
     return this._rowToEntity(row);
+  }
+
+  async findByMedicoAndDate(medicoId, dataInicio, dataFim) {
+    const rows = await this.ConsultaModel.findAll({
+      where: { medicoId, dataHora: { [Op.between]: [dataInicio, dataFim] } },
+      include: [
+        { model: this.MedicoModel, as: 'Medico', include: [{ model: this.PessoaModel, as: 'Pessoa' }] },
+        { model: this.PessoaModel, as: 'Paciente' }
+      ],
+      order: [['dataHora', 'ASC']]
+    });
+    return rows.map(r => this._rowToEntity(r));
   }
 }
 

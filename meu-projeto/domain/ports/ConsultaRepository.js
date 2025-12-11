@@ -5,6 +5,7 @@ class ConsultaRepository {
   async findAll() { throw new Error('not implemented'); }
   async findById(_id) { throw new Error('not implemented'); }
   async findByMedicoAndData(_medicoId, _dataHora) { throw new Error('not implemented'); }
+  async findByMedicoAndDate(_medicoId, _dataInicio, _dataFim) { throw new Error('not implemented'); }
 }
 
 module.exports = ConsultaRepository;

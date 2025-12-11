@@ -55,6 +55,11 @@ class MedicoRepositorySequelize extends MedicoRepository {
     const row = await this.MedicoModel.findOne({ where: { pessoaId }, include: [{ model: this.PessoaModel, as: 'Pessoa' }] });
     return this._rowToEntity(row);
   }
+
+  async findByCrm(crm) {
+    const row = await this.MedicoModel.findOne({ where: { crm }, include: [{ model: this.PessoaModel, as: 'Pessoa' }] });
+    return this._rowToEntity(row);
+  }
 }
 
 module.exports = MedicoRepositorySequelize;

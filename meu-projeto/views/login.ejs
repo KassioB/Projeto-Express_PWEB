@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <h1>Login</h1>
+  <% if (errors.geral) { %><div class="error"><%= errors.geral.msg %></div><% } %>
+  <form method="post" action="/login">
+    <div class="field"><label>Login</label><br/><input name="login" type="text" value="<%= data.login||'' %>" /></div>
+    <div class="field"><label>Senha</label><br/><input name="senha" type="password" /></div>
+    <button type="submit">Entrar</button>
+  </form>
+</body>
+</html>

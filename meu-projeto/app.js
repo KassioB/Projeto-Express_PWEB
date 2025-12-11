@@ -2,15 +2,18 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var logger = require('morgan');
-var aboutRouter = require('./routes/about');
 var indexRouter = require('./routes/index');
+var aboutRouter = require('./routes/about');
 var usersRouter = require('./routes/users');
 var pessoasRouter = require('./routes/pessoas');
 var medicosRouter = require('./routes/medicos');
 var agendamentoRouter = require('./routes/agendamento');
-var adminRouter = require('./routes/admin');
-var requireAdmin = require('./middlewares/requireAdmin');
+var authRouter = require('./routes/auth');
+var installRouter = require('./routes/install');
+var { isAuthenticated, isAdmin } = require('./middlewares/auth');
+// admin promotion removed; using Usuario.role 'admin' only
 
 var app = express();
 
@@ -25,15 +28,18 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({ secret: 'trae-secret', resave: false, saveUninitialized: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/about', aboutRouter);
 app.use('/users', usersRouter);
-app.use('/pessoas', pessoasRouter);
-app.use('/medicos', medicosRouter);
-app.use('/admin', adminRouter);
-app.use('/agendamento', requireAdmin, agendamentoRouter);
+app.use('/', authRouter);
+app.use('/install', installRouter);
+app.use('/pessoas', isAuthenticated, pessoasRouter);
+app.use('/medicos', isAuthenticated, medicosRouter);
+// admin promotion removed
+app.use('/agendamento', isAuthenticated, isAdmin, agendamentoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

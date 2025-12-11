@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <h1>Novo Usuário</h1>
+  <% if (errors.geral) { %><div class="error"><%= errors.geral.msg %></div><% } %>
+  <form method="post" action="/usuarios">
+    <div class="field"><label>Login*</label><br/><input name="login" type="text" value="<%= data.login||'' %>" /> <% if (errors.login) { %><div class="error"><%= errors.login.msg %></div><% } %></div>
+    <div class="field"><label>Senha*</label><br/><input name="senha" type="password" /> <% if (errors.senha) { %><div class="error"><%= errors.senha.msg %></div><% } %></div>
+    <div class="field">
+      <label>Role*</label><br/>
+      <select name="role">
+        <option value="admin" <%= (data.role==='admin')?'selected':'' %>>Admin</option>
+        <option value="medico" <%= (data.role==='medico')?'selected':'' %>>Médico</option>
+        <option value="padrao" <%= (!data.role||data.role==='padrao')?'selected':'' %>>Padrão</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Pessoa*</label><br/>
+      <select name="pessoaId">
+        <option value="">Selecione</option>
+        <% pessoas.forEach(p=> { %>
+          <option value="<%= p.id %>"><%= p.nome %> - <%= p.cpf %></option>
+        <% }) %>
+      </select>
+      <% if (errors.pessoaId) { %><div class="error"><%= errors.pessoaId.msg %></div><% } %>
+    </div>
+    <button type="submit">Criar Usuário</button>
+  </form>
+</body>
+</html>

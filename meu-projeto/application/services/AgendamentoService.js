@@ -1,9 +1,8 @@
 const Consulta = require('../../domain/entities/Consulta');
 
 class AgendamentoService {
-  constructor(consultaRepo, adminRepo, medicoRepo, pessoaRepo) {
+  constructor(consultaRepo, medicoRepo, pessoaRepo) {
     this.consultaRepo = consultaRepo;
-    this.adminRepo = adminRepo;
     this.medicoRepo = medicoRepo;
     this.pessoaRepo = pessoaRepo;
   }
@@ -12,9 +11,7 @@ class AgendamentoService {
     return await this.consultaRepo.findAll();
   }
 
-  async agendarConsulta(adminId, medicoId, pacienteId, dataHora) {
-    const admin = await this.adminRepo.findById(Number(adminId));
-    if (!admin) return null;
+  async agendarConsulta(medicoId, pacienteId, dataHora) {
     const medico = await this.medicoRepo.findById(Number(medicoId));
     if (!medico) return null;
     const paciente = await this.pessoaRepo.findById(Number(pacienteId));

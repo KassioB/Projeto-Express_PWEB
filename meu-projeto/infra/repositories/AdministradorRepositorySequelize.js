@@ -35,6 +35,11 @@ class AdministradorRepositorySequelize extends AdministradorRepository {
     const row = await this.AdministradorModel.findByPk(Number(id));
     return this._rowToEntity(row);
   }
+
+  async findByPessoaId(pessoaId) {
+    const row = await this.AdministradorModel.findOne({ where: { pessoaId } });
+    return this._rowToEntity(row);
+  }
 }
 
 module.exports = AdministradorRepositorySequelize;

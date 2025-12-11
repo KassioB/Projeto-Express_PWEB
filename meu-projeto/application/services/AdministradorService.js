@@ -15,6 +15,7 @@ class AdministradorService {
 
   async listar() { return await this.adminRepo.findAll(); }
   async obter(id) { return await this.adminRepo.findById(Number(id)); }
+  async findByPessoaId(pessoaId) { return await this.adminRepo.findByPessoaId(Number(pessoaId)); }
 }
 
 module.exports = AdministradorService;

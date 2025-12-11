@@ -17,6 +17,7 @@ class MedicoService {
 
   async listar() { return await this.medicoRepo.findAll(); }
   async obter(id) { return await this.medicoRepo.findById(Number(id)); }
+  async obterPorCrm(crm) { return await this.medicoRepo.findByCrm(crm); }
 }
 
 module.exports = MedicoService;

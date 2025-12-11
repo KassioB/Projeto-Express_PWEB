@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agenda do Médico</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <h1>Agenda do Dr(a). <%= (medico.pessoa? medico.pessoa.nome : ('Médico '+medico.id)) %></h1>
+  <form method="get" action="/medicos/<%= medico.id %>/agenda">
+    <label>Data:</label>
+    <input type="date" name="data" value="<%= data %>">
+    <button type="submit">Filtrar</button>
+  </form>
+
+  <table border="1" cellpadding="8" cellspacing="0">
+    <tr><th>Hora</th><th>Status</th><th>Ação</th></tr>
+    <% slots.forEach(s => { %>
+      <tr>
+        <td><%= s.hora %></td>
+        <td>
+          <% if (s.disponivel) { %>
+            Livre
+          <% } else { %>
+            Ocupado — Paciente: <%= s.consulta && s.consulta.pacienteNome %> (<%= s.consulta && s.consulta.status %>)
+          <% } %>
+        </td>
+        <td>
+          <% if (s.disponivel) { %>
+            <a style="color: green" href="/agendamento/novo?medicoId=<%= medico.id %>&data=<%= data %>&hora=<%= s.hora %>">Agendar</a>
+          <% } else { %>
+            <span style="color: gray">—</span>
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+  </table>
+
+  <p><a href="/medicos">Voltar</a> | <a href="/agendamento">Ir para Agendamento</a></p>
+</body>
+</html>
