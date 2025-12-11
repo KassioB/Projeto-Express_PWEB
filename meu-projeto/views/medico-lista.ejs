@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <h1><%= title %></h1>
+  <p><a href="/medicos/novo">Cadastrar Médico</a> | <a href="/">Home</a></p>
+  <% if (!medicos || medicos.length===0) { %>
+    <p>Nenhum médico cadastrado.</p>
+  <% } else { %>
+    <table>
+      <thead><tr><th>ID</th><th>Nome</th><th>CRM</th><th>Especialidade</th></tr></thead>
+      <tbody>
+      <% medicos.forEach(m=> { %>
+        <tr>
+          <td><%= m.id %></td>
+          <td><%= (m.pessoa ? m.pessoa.nome : '-') %></td>
+          <td><%= m.crm %></td>
+          <td><%= m.especialidade %></td>
+        </tr>
+      <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</body>
+</html>

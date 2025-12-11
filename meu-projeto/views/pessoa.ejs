@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <h1><%= title %></h1>
+  <form method="post" action="/pessoas">
+    <div class="field"><label>Nome*</label><br/><input name="nome" type="text" value="<%= data.nome||'' %>" /> <% if (errors.nome) { %><div class="error"><%= errors.nome.msg %></div><% } %></div>
+    <div class="field"><label>CPF*</label><br/><input name="cpf" type="text" value="<%= data.cpf||'' %>" /> <% if (errors.cpf) { %><div class="error"><%= errors.cpf.msg %></div><% } %></div>
+    <div class="field"><label>Telefone*</label><br/><input name="telefone" type="text" value="<%= data.telefone||'' %>" /> <% if (errors.telefone) { %><div class="error"><%= errors.telefone.msg %></div><% } %></div>
+    <div class="field"><label>E-mail*</label><br/><input name="email" type="email" value="<%= data.email||'' %>" /> <% if (errors.email) { %><div class="error"><%= errors.email.msg %></div><% } %></div>
+    <button type="submit">Salvar</button>
+  </form>
+  <p><a href="/pessoas">Voltar</a></p>
+</body>
+</html>

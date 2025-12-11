@@ -6,7 +6,10 @@ var logger = require('morgan');
 var aboutRouter = require('./routes/about');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var contatoRouter = require('./routes/contato');
+// removido contatoRouter após migração para Pessoas
+var pessoasRouter = require('./routes/pessoas');
+var medicosRouter = require('./routes/medicos');
+var agendamentoRouter = require('./routes/agendamento');
 
 var app = express();
 
@@ -26,7 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/about', aboutRouter);
 app.use('/users', usersRouter);
-app.use('/contato', contatoRouter);
+app.use('/pessoas', pessoasRouter);
+app.use('/medicos', medicosRouter);
+app.use('/agendamento', agendamentoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

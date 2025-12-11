@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+  <h1><%= title %></h1>
+  <% if (errors.geral) { %><div class="error"><%= errors.geral.msg %></div><% } %>
+  <form method="post" action="/medicos">
+    <div class="field">
+      <label>Pessoa*</label><br/>
+      <select name="pessoaId">
+        <option value="">Selecione</option>
+        <% pessoas.forEach(p=> { %>
+          <option value="<%= p.id %>" <%= (data.pessoaId==p.id)?'selected':'' %>><%= p.nome %> - <%= p.cpf %></option>
+        <% }) %>
+      </select>
+      <% if (errors.pessoaId) { %><div class="error"><%= errors.pessoaId.msg %></div><% } %>
+    </div>
+    <div class="field"><label>CRM*</label><br/><input name="crm" type="text" value="<%= data.crm||'' %>" /> <% if (errors.crm) { %><div class="error"><%= errors.crm.msg %></div><% } %></div>
+    <div class="field"><label>Especialidade*</label><br/><input name="especialidade" type="text" value="<%= data.especialidade||'' %>" /> <% if (errors.especialidade) { %><div class="error"><%= errors.especialidade.msg %></div><% } %></div>
+    <button type="submit">Cadastrar</button>
+  </form>
+  <p><a href="/pessoas">Ver Pessoas</a></p>
+</body>
+</html>
