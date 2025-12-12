@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
+  <%- include('partials/navbar') %>
   <h1>Agenda do Dr(a). <%= (medico.pessoa? medico.pessoa.nome : ('Médico '+medico.id)) %></h1>
   <form method="get" action="/medicos/<%= medico.id %>/agenda">
     <label>Data:</label>

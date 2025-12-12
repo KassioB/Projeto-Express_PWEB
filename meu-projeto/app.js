@@ -31,6 +31,9 @@ app.use(cookieParser());
 app.use(session({ secret: 'trae-secret', resave: false, saveUninitialized: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// disponibiliza usuario logado para as views
+app.use((req, res, next) => { res.locals.user = req.session && req.session.user ? req.session.user : null; next(); });
+
 app.use('/', indexRouter);
 app.use('/about', aboutRouter);
 app.use('/users', usersRouter);

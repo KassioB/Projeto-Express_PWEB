@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
+  <%- include('partials/navbar') %>
   <h1><%= title %></h1>
   <p><a href="/medicos/novo">Cadastrar Médico</a> | <a href="/">Home</a></p>
   <% if (!medicos || medicos.length===0) { %>

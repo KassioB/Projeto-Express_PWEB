@@ -1,0 +1,42 @@
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="nav-left">
+      <a class="brand" href="/"><i class="fas fa-stethoscope"></i> Home</a>
+    </div>
+    <div class="nav-center">
+      <div class="nav-item dropdown">
+        <a href="#" class="dropdown-toggle"><i class="fas fa-folder-plus"></i> Cadastrar</a>
+        <div class="dropdown-menu">
+          <a href="/pessoas/novo"><i class="fas fa-user-plus"></i> Nova Pessoa</a>
+          <a href="/medicos/novo"><i class="fas fa-user-md"></i> Novo Médico</a>
+          <% if (typeof user !== 'undefined' && user && user.role === 'admin') { %>
+            <a href="/usuarios/novo"><i class="fas fa-user-shield"></i> Novo Usuário/Admin</a>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="nav-item dropdown">
+        <a href="#" class="dropdown-toggle"><i class="fas fa-list"></i> Listar</a>
+        <div class="dropdown-menu">
+          <a href="/pessoas"><i class="fas fa-users"></i>Pessoas</a>
+          <a href="/medicos"><i class="fas fa-user-md"></i>Médicos</a>
+        </div>
+      </div>
+
+      <div class="nav-item">
+        <a href="/agendamento"><i class="fas fa-calendar-check"></i> Agenda</a>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <div class="user-info">
+        <% if (typeof user !== 'undefined' && user) { %>
+          <span><i class="fas fa-user-circle"></i> Olá, <%= user.login %></span>
+        <% } else { %>
+          <span><i class="fas fa-user-circle"></i> Visitante</span>
+        <% } %>
+      </div>
+      <a class="btn-logout" href="/logout" title="Sair"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+  </div>
+</nav>
