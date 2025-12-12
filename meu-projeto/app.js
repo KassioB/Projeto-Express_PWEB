@@ -34,14 +34,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // disponibiliza usuario logado para as views
 app.use((req, res, next) => { res.locals.user = req.session && req.session.user ? req.session.user : null; next(); });
 
-app.use('/', indexRouter);
-app.use('/about', aboutRouter);
-app.use('/users', usersRouter);
+app.use('/', isAuthenticated, isAdmin, indexRouter);
+app.use('/about', isAuthenticated, isAdmin, aboutRouter);
+app.use('/users', isAuthenticated, isAdmin, usersRouter);
 app.use('/', authRouter);
-app.use('/install', installRouter);
-app.use('/pessoas', isAuthenticated, pessoasRouter);
-app.use('/medicos', isAuthenticated, medicosRouter);
-// admin promotion removed
+app.use('/install', isAuthenticated, isAdmin, installRouter);
+app.use('/pessoas', isAuthenticated, isAdmin, pessoasRouter);
+app.use('/medicos', isAuthenticated, isAdmin, medicosRouter);
 app.use('/agendamento', isAuthenticated, isAdmin, agendamentoRouter);
 
 // catch 404 and forward to error handler
