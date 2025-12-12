@@ -65,7 +65,7 @@ form {
 
 .field { margin: 12px 0; }
 label { display: block; margin-bottom: 6px; color: var(--muted); font-weight: 600; }
-input[type="text"], input[type="number"], input[type="date"], input[type="datetime-local"], input[type="email"], select {
+input[type="text"], input[type="number"], input[type="date"], input[type="datetime-local"], input[type="email"], input[type="password"], select {
   width: 100%;
   background: #0b1324;
   color: var(--text);
